@@ -1,3 +1,13 @@
+# 运行说明
+需要将`.env.development`和`.env.production`文件中的`VITE_APP_BASE_URL`改为自己的服务器地址和端口号。
+
+
+.<br>
+.<br>
+.<br>
+.
+
+
 ## 后台管理系统
 
 采用 vue3 全家桶（vite+pinia+element-plus+vue-router@4）

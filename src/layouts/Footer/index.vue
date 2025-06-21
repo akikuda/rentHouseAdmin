@@ -1,8 +1,8 @@
 <template>
   <div class="layout-footer-container">
-    Copyright
-    <svg-icon name="copyright" size="16px" color="rgba(0, 0, 0, 0.45)" />
-    {{ fullYear }}尚硅谷教学
+    <!-- Copyright
+    <svg-icon name="copyright" size="16px" color="rgba(0, 0, 0, 0.45)" /> -->
+    当前时间：{{ fullYear }}   {{ fullTime }}
   </div>
 </template>
 
@@ -11,9 +11,11 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   setup() {
-    const fullYear = ref(new Date().getFullYear())
+    const fullYear = ref(new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit'}))
+    const fullTime = ref(new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit'}))
     return {
       fullYear,
+      fullTime,
     }
   },
 })

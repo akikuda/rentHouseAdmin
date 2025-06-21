@@ -20,7 +20,8 @@
             <span>首页</span>
           </template>
         </el-menu-item>
-        <el-sub-menu index="1">
+        <!-- 只有用户昵称为 超级管理员 时才显示系统管理菜单 -->
+        <el-sub-menu index="1" v-if="userInfo.name === '超级管理员'">
           <template #title>
             <el-icon>
               <component is="Setting"></component>
@@ -32,7 +33,7 @@
               <component is="UserFilled"></component>
             </el-icon>
             <template #title>
-              <span>用户管理</span>
+              <span>后台用户管理</span>
             </template>
           </el-menu-item>
           <el-menu-item index="/system/post">
@@ -110,7 +111,7 @@
           <el-icon>
             <component is="User"></component>
           </el-icon>
-          <span>用户管理</span>
+          <span>移动端用户管理</span>
         </el-menu-item>
       </el-menu>
     </el-scrollbar>
@@ -120,6 +121,7 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useSettingsStore } from '@/store/modules/settings'
+import { useUserStore } from '@/store/modules/user'
 import { useRoute } from 'vue-router'
 import Logo from '../Logo/index.vue'
 export default defineComponent({
@@ -128,16 +130,19 @@ export default defineComponent({
   },
   setup() {
     const settingsStore = useSettingsStore()
+    const userStore = useUserStore()
     const route = useRoute()
     const collapse = computed(() => settingsStore.collapse)
     const themeConfig = computed(() => settingsStore.themeConfig)
     const activeMenu = computed(() =>
       route.meta.activeMenu ? (route.meta.activeMenu as string) : route.path,
     )
+    const userInfo = computed(() => userStore.userInfo)
     return {
       collapse,
       activeMenu,
       themeConfig,
+      userInfo,
     }
   },
 })

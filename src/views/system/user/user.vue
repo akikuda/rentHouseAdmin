@@ -89,6 +89,13 @@ const openDrawer = async (
   title: string,
   rowData: Partial<SysUserInterfaceRes> = {} as SysUserInterfaceRes,
 ) => {
+  if (rowData?.username === 'admin') {
+    ElMessage({
+      type: 'warning',
+      message: `超级管理员不允许编辑`,
+    })
+    return
+  }
   let params = {
     title,
     rowData: { ...rowData },
@@ -109,7 +116,7 @@ const handleDelete = async (row: SysUserInterfaceRes) => {
   if (row?.username === 'admin') {
     ElMessage({
       type: 'warning',
-      message: `系统用户不允许删除`,
+      message: `超级管理员不允许删除`,
     })
     return
   }
@@ -174,6 +181,7 @@ const columns: ColumnProps[] = [
           active-value={SystemUserStatus.NORMAL}
           inactive-value={SystemUserStatus.DISABLED}
           v-model={row.status}
+          disabled={row.username === 'admin'}
           onChange={() => updateSysUserStatus(row.id, row.status)}
         ></el-switch>
       )
